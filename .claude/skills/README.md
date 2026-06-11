@@ -21,6 +21,8 @@ backend low-level design (LLD).
 |-------|--------------|
 | [`frontend-component`](frontend-component/SKILL.md) | Building a new React/Next.js UI component (shadcn + Aceternity + Tailwind). |
 | [`backend-lld`](backend-lld/SKILL.md) | Designing a backend feature/endpoint: data model, contracts, error handling. |
+| [`fallow`](fallow/SKILL.md) | Static analysis for TS/JS — dead code, duplication, complexity, circular deps, PR audits. |
+| [`graphify`](graphify/SKILL.md) | Exploring architecture, querying the code knowledge graph, tracing cross-module dependencies. |
 
 ## Adding a new skill
 
