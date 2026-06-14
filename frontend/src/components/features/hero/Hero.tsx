@@ -1,8 +1,8 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { AgentAtmosphere } from "@/components/common/AgentAtmosphere";
+import { MapPanScene } from "@/components/features/hero/MapPanScene";
 import { Crest } from "@/components/common/Crest";
 import { IntelIcon } from "@/components/common/VlrIcon";
 import { LiveDot } from "@/components/common/LiveDot";
@@ -10,12 +10,6 @@ import { Spoiler } from "@/components/common/Spoiler";
 import { Tag } from "@/components/common/Tag";
 import { cn } from "@/lib/utils";
 import type { Match } from "@/types/ggwp";
-
-// Client-only canvas backdrop; never server-rendered and lazy so it stays out
-// of the initial bundle until the hero mounts.
-const TacticalRadar = dynamic(() => import("./TacticalRadar").then((m) => m.TacticalRadar), {
-  ssr: false,
-});
 
 const heroShell =
   "group relative h-full min-h-[440px] cursor-pointer overflow-hidden rounded-[20px] border border-glass-line bg-glass shadow-[0_24px_70px_-16px_rgba(0,0,0,0.65)] backdrop-blur-2xl transition-[border-color,box-shadow] duration-300 hover:border-line-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet/50";
@@ -178,12 +172,14 @@ function HeroCta({ live }: { live: boolean }) {
 export interface HeroProps {
   m: Match;
   onOpen: (m: Match) => void;
+  /** Map whose 3D pan plays behind the face-off; synced to the map-pool tile. */
+  mapName?: string;
   className?: string;
 }
 
-// The hero match banner: a calm glass head-to-head face-off over the app's
-// ambient aurora, with cyan/violet team sides and a gentle staggered reveal.
-export function Hero({ m, onOpen, className }: HeroProps) {
+// The hero match banner: a calm glass head-to-head face-off over a slow 3D pan
+// of the selected map, with cyan/violet team sides and a gentle staggered reveal.
+export function Hero({ m, onOpen, mapName = "Ascent", className }: HeroProps) {
   const reduce = useReducedMotion() ?? false;
   const live = m.status === "live";
   const up = !live;
@@ -198,16 +194,13 @@ export function Hero({ m, onOpen, className }: HeroProps) {
       onClick={open}
       onKeyDown={(e) => activateOnKey(e, open)}
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-0 opacity-[0.6] [mask-image:radial-gradient(115%_88%_at_50%_42%,#000_16%,transparent_70%)]"
-      >
-        <TacticalRadar />
-      </div>
+      {/* 3D camera-pan of the selected map, synced to the map-pool tile. */}
+      <MapPanScene slug={mapName.toLowerCase()} className="z-0" />
 
-      {/* Agent renders dissolved into each side, framing the face-off as depth. */}
-      <AgentAtmosphere agent="jett" side="left" tone="cyan" className="hidden sm:block" />
-      <AgentAtmosphere agent="reyna" side="right" tone="violet" className="hidden sm:block" />
+      {/* Agents dissolved into each side; luminosity blend lets the map's
+          colours bleed through so they sit in the scene, not on top of it. */}
+      <AgentAtmosphere agent="jett" side="left" tone="cyan" opacity={0.2} className="hidden sm:block" />
+      <AgentAtmosphere agent="reyna" side="right" tone="violet" opacity={0.2} className="hidden sm:block" />
 
       <HeroFx />
 

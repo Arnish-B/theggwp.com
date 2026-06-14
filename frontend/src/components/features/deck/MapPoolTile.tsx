@@ -11,6 +11,10 @@ const POOL = ["Ascent", "Bind", "Haven", "Split", "Lotus", "Sunset", "Icebox", "
 
 export interface MapPoolTileProps {
   className?: string;
+  /** Controlled selected map; when omitted the tile manages its own selection. */
+  activeMap?: string;
+  /** Notifies the parent when the user picks a map (drives the hero pan sync). */
+  onMapChange?: (map: string) => void;
 }
 
 /**
@@ -18,9 +22,14 @@ export interface MapPoolTileProps {
  * cyan schematic (the minimap PNG used as a mask over the accent colour), with a
  * compact selectable list of the active-duty pool beside it.
  */
-export function MapPoolTile({ className }: MapPoolTileProps) {
-  const [active, setActive] = useState<string>(POOL[0]);
+export function MapPoolTile({ className, activeMap, onMapChange }: MapPoolTileProps) {
+  const [internal, setInternal] = useState<string>(POOL[0]);
+  const active = activeMap ?? internal;
   const slug = active.toLowerCase();
+  const setActive = (map: string) => {
+    setInternal(map);
+    onMapChange?.(map);
+  };
 
   return (
     <BentoCard

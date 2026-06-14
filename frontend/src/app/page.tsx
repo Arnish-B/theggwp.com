@@ -40,6 +40,7 @@ export default function Home() {
   const [view, setView] = useState<"list" | "calendar">("list");
   const [f, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [openId, setOpenId] = useState<string | null>(all[0].id);
+  const [activeMap, setActiveMap] = useState("Ascent");
 
   const openMatch = (m: Match) => router.push(`/match/${m.id}`);
 
@@ -123,6 +124,7 @@ export default function Home() {
             <Hero
               m={featured}
               onOpen={openMatch}
+              mapName={activeMap}
               className="sm:col-span-2 lg:col-span-8 lg:row-span-2"
             />
             <LiveNowTile
@@ -130,7 +132,11 @@ export default function Home() {
               onOpen={openMatch}
               className="lg:col-span-4"
             />
-            <MapPoolTile className="lg:col-span-4" />
+            <MapPoolTile
+              activeMap={activeMap}
+              onMapChange={setActiveMap}
+              className="lg:col-span-4"
+            />
           </BentoGrid>
 
           {/* Tournament browser + peripheral rail (ad sits lowest, out of the way). */}
