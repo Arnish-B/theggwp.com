@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Oswald, Barlow, Bebas_Neue, Barlow_Semi_Condensed } from "next/font/google";
 import "./globals.css";
+import { AmbientBackground } from "@/components/common/AmbientBackground";
 import { SpoilerProvider } from "@/components/common/SpoilerContext";
 
 const oswald = Oswald({
@@ -40,6 +41,7 @@ export default function RootLayout({
       className={`dark ${oswald.variable} ${barlow.variable} ${bebas.variable} ${barlowSemi.variable}`}
     >
       <body className="min-h-full font-ui text-ink antialiased">
+        <AmbientBackground />
         <SpoilerProvider>{children}</SpoilerProvider>
       </body>
     </html>

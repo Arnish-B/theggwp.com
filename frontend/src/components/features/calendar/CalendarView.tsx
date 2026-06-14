@@ -32,10 +32,10 @@ function CalDay({
         "group/day relative min-h-0 min-w-0 cursor-pointer overflow-hidden rounded-2xl border border-line bg-surface px-3 py-[11px] transition-[background,border-color,box-shadow] duration-300 hover:border-line-2",
         isPast && "opacity-[0.62]",
         !matches.length && "bg-white/[0.012]",
-        isToday && "border-blue/45 shadow-[inset_0_0_0_1px_rgba(77,141,255,0.25)]",
-        live && "border-red/40",
+        isToday && "border-cyan/45 shadow-[inset_0_0_0_1px_rgba(92,198,214,0.25)]",
+        live && "border-violet/40",
         active &&
-          "z-[2] border-red/45 bg-surface-2 opacity-100 shadow-[0_22px_50px_rgba(0,0,0,0.5),inset_0_0_0_1px_rgba(255,70,85,0.18)]",
+          "z-[2] border-violet/45 bg-surface-2 opacity-100 shadow-[0_22px_50px_rgba(0,0,0,0.5),inset_0_0_0_1px_rgba(255,70,85,0.18)]",
       )}
       onMouseEnter={onEnter}
       onClick={onEnter}

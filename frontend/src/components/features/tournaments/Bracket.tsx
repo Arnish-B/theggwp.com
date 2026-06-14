@@ -25,8 +25,8 @@ function SmallMatch({
   return (
     <button
       className={cn(
-        "flex w-full flex-col gap-[5px] rounded-[11px] border border-line bg-surface-2 px-3 py-2.5 text-left transition enabled:cursor-pointer enabled:hover:-translate-y-px enabled:hover:border-blue enabled:hover:shadow-[0_10px_24px_rgba(0,0,0,0.4)]",
-        live && "border-red/50 shadow-[0_0_0_1px_rgba(255,70,85,0.18)]",
+        "flex w-full flex-col gap-[5px] rounded-[11px] border border-line bg-surface-2 px-3 py-2.5 text-left transition enabled:cursor-pointer enabled:hover:-translate-y-px enabled:hover:border-cyan enabled:hover:shadow-[0_10px_24px_rgba(0,0,0,0.4)]",
+        live && "border-violet/50 shadow-[0_0_0_1px_rgba(255,70,85,0.2)]",
         highlight && "shadow-[0_0_22px_rgba(255,70,85,0.16)]",
       )}
       onClick={() => m.teamA && onOpen?.(m)}

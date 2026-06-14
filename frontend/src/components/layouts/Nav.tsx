@@ -1,15 +1,16 @@
 "use client";
 
 import { SpoilerToggle } from "@/components/common/SpoilerToggle";
+import { IntelIcon, type IntelIconName } from "@/components/common/VlrIcon";
 import { cn } from "@/lib/utils";
 
 export type Tab = "home" | "history" | "upcoming" | "calendar";
 
-const TABS: [Tab, string][] = [
-  ["home", "Home"],
-  ["history", "History"],
-  ["upcoming", "Upcoming"],
-  ["calendar", "Calendar"],
+const TABS: [Tab, string, IntelIconName][] = [
+  ["home", "Home", "recon"],
+  ["history", "History", "haunt"],
+  ["upcoming", "Upcoming", "drone"],
+  ["calendar", "Calendar", "marker"],
 ];
 
 const navShell =
@@ -47,20 +48,31 @@ export function Nav({
     <nav className={navShell}>
       <Brand onLogo={onLogo} />
       <div className="flex gap-0.5">
-        {TABS.map(([k, l]) => (
-          <button
-            key={k}
-            className={cn(
-              "rounded-[9px] px-3.5 py-2 text-[13px] font-medium transition",
-              activeTab === k
-                ? "bg-red/[0.13] text-white shadow-[inset_0_0_0_1px_rgba(255,70,85,0.28)]"
-                : "text-ink-2 hover:bg-white/[0.045] hover:text-ink",
-            )}
-            onClick={() => onTab(k)}
-          >
-            {l}
-          </button>
-        ))}
+        {TABS.map(([k, l, icon]) => {
+          const on = activeTab === k;
+          return (
+            <button
+              key={k}
+              className={cn(
+                "flex items-center gap-2 rounded-[9px] px-3.5 py-2 text-[13px] font-medium transition",
+                on
+                  ? "bg-violet/[0.14] text-white shadow-[inset_0_0_0_1px_rgba(255,70,85,0.3)]"
+                  : "text-ink-2 hover:bg-white/[0.045] hover:text-ink",
+              )}
+              onClick={() => onTab(k)}
+            >
+              <IntelIcon
+                name={icon}
+                size={14}
+                className={cn(
+                  "transition",
+                  on ? "text-violet" : "text-ink-3 group-hover:text-ink-2",
+                )}
+              />
+              {l}
+            </button>
+          );
+        })}
       </div>
       <div className="ml-auto flex items-center gap-3.5">
         <SpoilerToggle />

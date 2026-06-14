@@ -26,6 +26,9 @@ node_modules/
 
 # ── Frontend (Next.js) ─────────────────────────────────
 
+# raw VALORANT key-art reference (large binaries, not served by the app)
+frontend/assets/
+
 # testing
 coverage/
 

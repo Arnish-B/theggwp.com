@@ -59,8 +59,8 @@ const Trigger = forwardRef<
     <button
       ref={ref}
       className={cn(
-        "flex items-center gap-2 rounded-[10px] border border-line bg-white/[0.03] px-3 py-2 transition hover:border-line-2 hover:bg-white/[0.05] data-[popup-open]:border-blue data-[popup-open]:shadow-[0_0_0_3px_rgba(77,141,255,0.12)]",
-        active && "border-red/45 bg-red/[0.09]",
+        "flex items-center gap-2 rounded-[10px] border border-line bg-white/[0.03] px-3 py-2 transition hover:border-line-2 hover:bg-white/[0.05] data-[popup-open]:border-cyan data-[popup-open]:shadow-[0_0_0_3px_rgba(92,198,214,0.14)]",
+        active && "border-violet/45 bg-violet/[0.1]",
         className,
       )}
       {...rest}

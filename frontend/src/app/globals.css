@@ -59,8 +59,15 @@
   --color-red-dim: var(--red-dim);
   --color-blue: var(--blue);
   --color-blue-dim: var(--blue-dim);
+  --color-cyan: var(--cyan);
+  --color-cyan-dim: var(--cyan-dim);
+  --color-violet: var(--violet);
+  --color-violet-dim: var(--violet-dim);
   --color-line: var(--line);
   --color-line-2: var(--line-2);
+  --color-glass: var(--glass);
+  --color-glass-2: var(--glass-2);
+  --color-glass-line: var(--glass-line);
 
   --font-disp: var(--font-disp), "Oswald", system-ui, sans-serif;
   --font-ui: var(--font-ui), "Barlow", system-ui, sans-serif;
@@ -139,23 +146,44 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-/* ── theGGWP raw custom properties (also read at runtime via getComputedStyle) ── */
+/* ── theGGWP raw custom properties (also read at runtime via getComputedStyle) ──
+   Palette: authentic VALORANT — a dark teal-navy base (#0F1923) with the game's
+   signature red (#FF4655) paired against cyan, and a bone off-white for text.
+   The --cyan / --violet token NAMES are retained (per this repo's convention of
+   decoupling token names from values) so the whole app recolours from here
+   without touching every component; --cyan = team A / info, and the token still
+   called --violet now holds VALORANT red = team B / primary. The legacy
+   --blue / --red aliases follow them. */
 :root {
-  --red: #ff4655;
-  --red-dim: #ff6b76;
-  --blue: #4d8dff;
-  --blue-dim: #83adff;
-  --bg: #07080b;
-  --surface: #0c0e13;
-  --surface-2: #10131a;
-  --surface-3: #161a23;
-  --line: rgba(255, 255, 255, 0.06);
-  --line-2: rgba(255, 255, 255, 0.12);
-  --ink: #f5f7fb;
-  --ink-2: #a4adbe;
-  --ink-3: #646d80;
-  --redglow: rgba(255, 70, 85, 0.32);
-  --blueglow: rgba(77, 141, 255, 0.3);
+  --cyan: #5cc6d6;
+  --cyan-dim: #93dbe6;
+  /* name kept for backwards-compat; value is now VALORANT red */
+  --violet: #ff4655;
+  --violet-dim: #ff7a84;
+
+  /* legacy aliases → cyan + VALORANT red duo */
+  --blue: var(--cyan);
+  --blue-dim: var(--cyan-dim);
+  --red: var(--violet);
+  --red-dim: var(--violet-dim);
+
+  --bg: #0f1923;
+  --surface: #16212c;
+  --surface-2: #1d2b38;
+  --surface-3: #243443;
+  --line: rgba(236, 232, 225, 0.07);
+  --line-2: rgba(236, 232, 225, 0.14);
+  --ink: #ece8e1;
+  --ink-2: #93a1ad;
+  --ink-3: #5d6b78;
+
+  /* translucent surfaces for glassmorphism tiles */
+  --glass: rgba(18, 28, 38, 0.62);
+  --glass-2: rgba(26, 38, 50, 0.55);
+  --glass-line: rgba(236, 232, 225, 0.09);
+
+  --redglow: rgba(255, 70, 85, 0.3);
+  --blueglow: rgba(92, 198, 214, 0.26);
 }
 
 @layer base {
@@ -171,29 +199,20 @@
     min-height: 100vh;
   }
   ::selection {
-    background: var(--red);
-    color: #fff;
+    background: color-mix(in oklab, var(--violet) 85%, white);
+    color: #0a0c12;
   }
-  /* atmospheric base: faint tactical grid + red/blue vignette */
+  /* atmospheric base: very faint tactical grid, softly masked to the top */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: -2;
+    z-index: -3;
     pointer-events: none;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-    background-size: 64px 64px;
-    mask-image: radial-gradient(120% 90% at 50% 0%, #000 0%, transparent 75%);
-  }
-  body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: radial-gradient(900px 420px at 70% -10%, rgba(255, 70, 85, 0.08), transparent 70%),
-      radial-gradient(800px 420px at 8% 2%, rgba(77, 141, 255, 0.06), transparent 65%);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.014) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(125% 95% at 50% 0%, #000 0%, transparent 72%);
   }
 }
 
@@ -247,4 +266,47 @@
 .hud-draw {
   stroke-dasharray: 60;
   animation: ggwp-hudraw 0.7s ease forwards;
+}
+
+/* ── ambient "glass premium" background: drifting aurora + angular shards ── */
+@keyframes ggwp-aurora-1 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(6%, 4%, 0) scale(1.12); }
+}
+@keyframes ggwp-aurora-2 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50% { transform: translate3d(-7%, -5%, 0) scale(0.92); }
+}
+@keyframes ggwp-aurora-3 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.95); }
+  50% { transform: translate3d(4%, -6%, 0) scale(1.1); }
+}
+@keyframes ggwp-shards {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  100% { transform: translate3d(-2%, -2.5%, 0) rotate(-3deg); }
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  will-change: transform;
+}
+.aurora-1 { animation: ggwp-aurora-1 26s ease-in-out infinite; }
+.aurora-2 { animation: ggwp-aurora-2 32s ease-in-out infinite; }
+.aurora-3 { animation: ggwp-aurora-3 38s ease-in-out infinite; }
+.shard-drift {
+  will-change: transform;
+  animation: ggwp-shards 40s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-1,
+  .aurora-2,
+  .aurora-3,
+  .shard-drift,
+  .animate-sweep,
+  .animate-livering {
+    animation: none !important;
+  }
 }

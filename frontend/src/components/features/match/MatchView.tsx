@@ -77,8 +77,8 @@ export function MatchView({ m }: { m: Match }) {
           {/* Versus banner */}
           <div className="relative mb-6 grid min-h-[260px] grid-cols-[1fr_auto_1fr] items-center gap-6 overflow-hidden rounded-[18px] border border-line px-[5%] py-[38px] shadow-[0_24px_60px_rgba(0,0,0,0.5)]">
             <div className="absolute inset-0">
-              <span className="absolute inset-y-0 left-0 right-1/2 bg-[linear-gradient(110deg,rgba(77,141,255,0.3),rgba(77,141,255,0.02))]" />
-              <span className="absolute inset-y-0 left-1/2 right-0 bg-[linear-gradient(250deg,rgba(255,70,85,0.3),rgba(255,70,85,0.02))]" />
+              <span className="absolute inset-y-0 left-0 right-1/2 bg-[linear-gradient(110deg,rgba(92,198,214,0.22),rgba(92,198,214,0.02))]" />
+              <span className="absolute inset-y-0 left-1/2 right-0 bg-[linear-gradient(250deg,rgba(255,70,85,0.22),rgba(255,70,85,0.02))]" />
               <span className="absolute -bottom-[12%] -top-[12%] left-1/2 w-0.5 -translate-x-1/2 rotate-[11deg] bg-[linear-gradient(var(--blue),var(--red))] shadow-[0_0_26px_rgba(255,255,255,0.25)]" />
             </div>
 
